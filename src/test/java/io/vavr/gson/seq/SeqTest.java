@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 public abstract class SeqTest<T extends Seq<?>> {
 
     abstract T of(Object... arr);
+    abstract Class<?> clz();
     abstract Type type();
     abstract Type typeWithNestedType();
 
@@ -38,12 +39,23 @@ public abstract class SeqTest<T extends Seq<?>> {
     @Test
     public void deserialize() {
         Seq<Integer> seq = gson.fromJson("[1,2]", type());
+        assert clz().isAssignableFrom(seq.getClass());
+        assert seq.head().getClass() == Integer.class;
+        assert seq.equals(of(1, 2));
+    }
+
+    @Test
+    public void deserializeWithCast() {
+        Seq<Integer> seq = gson.fromJson("[\"1\",\"2\"]", type());
+        assert clz().isAssignableFrom(seq.getClass());
+        assert seq.head().getClass() == Integer.class;
         assert seq.equals(of(1, 2));
     }
 
     @Test
     public void deserializeNested() {
-        Seq<Integer> seq = gson.fromJson("[[1],[2]]", typeWithNestedType());
+        Seq<Seq<Integer>> seq = gson.fromJson("[[1],[2]]", typeWithNestedType());
+        assert clz().isAssignableFrom(seq.head().getClass());
         assert seq.equals(of(of(1), of(2)));
     }
 }

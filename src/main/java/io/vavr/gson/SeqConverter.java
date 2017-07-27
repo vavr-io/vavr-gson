@@ -7,32 +7,40 @@
 package io.vavr.gson;
 
 import com.google.gson.*;
-import io.vavr.collection.Stream;
+import io.vavr.collection.Seq;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.function.Function;
 
-public class StreamConverter implements JsonSerializer<Stream<?>>, JsonDeserializer<Stream<?>> {
+public class SeqConverter<T extends Seq<?>> implements JsonSerializer<T>, JsonDeserializer<T> {
+
+    private final Function<Iterable<JsonElement>, Seq<JsonElement>> factory;
+
+    SeqConverter(Function<Iterable<JsonElement>, Seq<JsonElement>> factory) {
+        this.factory = factory;
+    }
 
     @Override
-    public Stream<?> deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext ctx) throws JsonParseException {
+    @SuppressWarnings("unchecked")
+    public T deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext ctx) throws JsonParseException {
         if (jsonElement.isJsonArray()) {
-            Stream<JsonElement> stream = Stream.ofAll(jsonElement.getAsJsonArray());
+            Seq<JsonElement> seq = factory.apply(jsonElement.getAsJsonArray());
             if (type instanceof ParameterizedType) {
                 Type[] types = ((ParameterizedType) type).getActualTypeArguments();
                 if (types.length == 1) {
-                    return stream.map(e -> ctx.deserialize(e, types[0]));
+                    return (T) seq.map(e -> ctx.deserialize(e, types[0]));
                 }
             }
-            return stream;
+            return (T) seq;
         } else {
             throw new JsonParseException("array expected");
         }
     }
 
     @Override
-    public JsonElement serialize(Stream<?> stream, Type type, JsonSerializationContext ctx) {
-        return stream.foldLeft(new JsonArray(), (a, e) -> {
+    public JsonElement serialize(T seq, Type type, JsonSerializationContext ctx) {
+        return seq.foldLeft(new JsonArray(), (a, e) -> {
             a.add(ctx.serialize(e));
             return a;
         });

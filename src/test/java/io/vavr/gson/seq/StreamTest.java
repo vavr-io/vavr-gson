@@ -14,6 +14,11 @@ public class StreamTest extends SeqTest<Stream<?>> {
     }
 
     @Override
+    Class<?> clz() {
+        return Stream.class;
+    }
+
+    @Override
     Type type() {
         return new TypeToken<Stream<Integer>>(){}.getType();
     }
