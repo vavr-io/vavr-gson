@@ -7,22 +7,24 @@
 package io.vavr.gson;
 
 import com.google.gson.GsonBuilder;
+import io.vavr.Tuple;
 import io.vavr.collection.*;
 
 public class VavrGson {
 
     public static GsonBuilder registerAll(GsonBuilder builder)  {
-        if (builder == null) {
-            throw new NullPointerException("builder cannot be null");
-        }
-        registerAllSeq(builder);
+        checkBuilder(builder);
+        registerTuples(builder);
+        registerAllTraversables(builder);
         return builder;
     }
 
-    public static GsonBuilder registerAllSeq(GsonBuilder builder)  {
-        if (builder == null) {
-            throw new NullPointerException("builder cannot be null");
-        }
+    public static GsonBuilder registerTuples(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeHierarchyAdapter(Tuple.class, new TupleConverter());
+    }
+
+    public static GsonBuilder registerAllTraversables(GsonBuilder builder)  {
+        checkBuilder(builder);
         registerArray(builder);
         registerList(builder);
         registerQueue(builder);
@@ -32,42 +34,29 @@ public class VavrGson {
     }
 
     public static GsonBuilder registerArray(GsonBuilder builder) {
-        if (builder == null) {
-            throw new NullPointerException("builder cannot be null");
-        }
-        builder.registerTypeAdapter(Array.class, new SeqConverter<>(Array::ofAll));
-        return builder;
+        return checkBuilder(builder).registerTypeAdapter(Array.class, new TraversableConverter<>(Array::ofAll));
     }
 
     public static GsonBuilder registerList(GsonBuilder builder) {
-        if (builder == null) {
-            throw new NullPointerException("builder cannot be null");
-        }
-        builder.registerTypeHierarchyAdapter(List.class, new SeqConverter<>(List::ofAll));
-        return builder;
+        return checkBuilder(builder).registerTypeHierarchyAdapter(List.class, new TraversableConverter<>(List::ofAll));
     }
 
     public static GsonBuilder registerQueue(GsonBuilder builder) {
-        if (builder == null) {
-            throw new NullPointerException("builder cannot be null");
-        }
-        builder.registerTypeAdapter(Queue.class, new SeqConverter<>(Queue::ofAll));
-        return builder;
+        return checkBuilder(builder).registerTypeAdapter(Queue.class, new TraversableConverter<>(Queue::ofAll));
     }
 
     public static GsonBuilder registerStream(GsonBuilder builder) {
-        if (builder == null) {
-            throw new NullPointerException("builder cannot be null");
-        }
-        builder.registerTypeHierarchyAdapter(Stream.class, new SeqConverter<>(Stream::ofAll));
-        return builder;
+        return checkBuilder(builder).registerTypeHierarchyAdapter(Stream.class, new TraversableConverter<>(Stream::ofAll));
     }
 
     public static GsonBuilder registerVector(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(Vector.class, new TraversableConverter<>(Vector::ofAll));
+    }
+
+    private static GsonBuilder checkBuilder(GsonBuilder builder) {
         if (builder == null) {
             throw new NullPointerException("builder cannot be null");
         }
-        builder.registerTypeAdapter(Vector.class, new SeqConverter<>(Vector::ofAll));
         return builder;
     }
 }

@@ -3,6 +3,7 @@ package io.vavr.gson.seq;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
 import io.vavr.collection.Seq;
 import io.vavr.gson.VavrGson;
 import org.junit.BeforeClass;
@@ -34,6 +35,15 @@ public abstract class SeqTest<T extends Seq<?>> {
     @Test
     public void serialize() {
         assert gson.toJson(of(1, 2)).equals("[1,2]");
+    }
+
+    @Test
+    public void deserializeSimpleType() {
+        Object obj = gson.fromJson("[1,2]", clz());
+        assert clz().isAssignableFrom(obj.getClass());
+        Seq<?> seq = (Seq<?>) obj;
+        assert seq.head() instanceof JsonPrimitive;
+        assert seq.map(e -> ((JsonPrimitive) e).getAsInt()).equals(of(1, 2));
     }
 
     @Test
