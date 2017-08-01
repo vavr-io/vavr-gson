@@ -16,7 +16,28 @@ public class VavrGson {
         checkBuilder(builder);
         registerTuples(builder);
         registerAllTraversables(builder);
+        registerAllMaps(builder);
         return builder;
+    }
+
+    public static GsonBuilder registerAllMaps(GsonBuilder builder) {
+        checkBuilder(builder);
+        registerHashMap(builder);
+        registerLinkedHashMap(builder);
+        registerTreeMap(builder);
+        return builder;
+    }
+
+    public static GsonBuilder registerHashMap(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(HashMap.class, new MapConverter<>(HashMap::ofEntries));
+    }
+
+    public static GsonBuilder registerLinkedHashMap(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(LinkedHashMap.class, new MapConverter<>(LinkedHashMap::ofEntries));
+    }
+
+    public static GsonBuilder registerTreeMap(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(TreeMap.class, new MapConverter<>(TreeMap::ofEntries));
     }
 
     public static GsonBuilder registerTuples(GsonBuilder builder) {
