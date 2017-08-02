@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class MapConverter<T extends Map<?, ?>> extends JsonObjectConverter<T> {
+public class MapConverter<K, V, T extends Map<K, V>> extends JsonObjectConverter<T> {
 
     private final Function<Iterable<Tuple2<String, ?>>, Map<?, ?>> factory;
 
@@ -36,7 +36,7 @@ public class MapConverter<T extends Map<?, ?>> extends JsonObjectConverter<T> {
     }
 
     @Override
-    Map<?, ?> toMap(T src) {
+    Map<K, V> toMap(T src) {
         return src;
     }
 }
