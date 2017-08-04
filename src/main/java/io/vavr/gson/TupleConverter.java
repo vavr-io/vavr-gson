@@ -23,9 +23,6 @@ public class TupleConverter extends JsonArrayConverter<Tuple> {
         if (subTypes.length > 0 && json.size() != subTypes.length) {
             throw new JsonParseException("elements expected: " + subTypes.length);
         }
-        if (json.size() > 8) {
-            throw new JsonParseException("bad tuple arity");
-        }
         Object[] arr = new Object[json.size()];
         for (int i = 0; i < json.size(); i++) {
             JsonElement el = json.get(i);

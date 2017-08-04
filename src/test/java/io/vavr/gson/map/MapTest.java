@@ -1,31 +1,19 @@
 package io.vavr.gson.map;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import io.vavr.collection.Map;
-import io.vavr.gson.VavrGson;
-import org.junit.BeforeClass;
+import io.vavr.gson.AbstractTest;
 import org.junit.Test;
 
 import java.lang.reflect.Type;
 
-public abstract class MapTest<T extends Map<?,?>> {
+public abstract class MapTest<T extends Map<?,?>> extends AbstractTest {
 
     abstract T of(Object key, Object value);
     abstract Class<?> clz();
     abstract Type type();
     abstract Type typeWithNestedType();
-
-    private static Gson gson;
-
-    @BeforeClass
-    public static void before() {
-        GsonBuilder builder = new GsonBuilder();
-        VavrGson.registerAll(builder);
-        gson = builder.create();
-    }
 
     @Test(expected = JsonParseException.class)
     public void badJson() {

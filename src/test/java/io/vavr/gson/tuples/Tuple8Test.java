@@ -1,29 +1,17 @@
 package io.vavr.gson.tuples;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import io.vavr.Tuple;
 import io.vavr.Tuple8;
-import io.vavr.gson.VavrGson;
-import org.junit.BeforeClass;
+import io.vavr.gson.AbstractTest;
 import org.junit.Test;
 
-public class Tuple8Test {
-
-    private static Gson gson;
-
-    @BeforeClass
-    public static void before() {
-        GsonBuilder builder = new GsonBuilder();
-        VavrGson.registerAll(builder);
-        gson = builder.create();
-    }
+public class Tuple8Test extends AbstractTest {
 
     @Test
     public void serialize() {
-        Tuple8<?, ?, ?, ?, ?, ?, ?, ?> t8 = Tuple.of(1, 2, 3, 4, 5, 6, 7, 8);
-        assert gson.toJson(t8).equals("[1,2,3,4,5,6,7,8]");
+        Tuple8<?, ?, ?, ?, ?, ?, ?, ?> t = Tuple.of(1, 2, 3, 4, 5, 6, 7, 8);
+        assert gson.toJson(t).equals("[1,2,3,4,5,6,7,8]");
     }
 
     @Test

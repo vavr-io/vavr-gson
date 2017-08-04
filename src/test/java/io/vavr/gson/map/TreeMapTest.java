@@ -1,7 +1,6 @@
 package io.vavr.gson.map;
 
 import com.google.gson.reflect.TypeToken;
-import io.vavr.collection.HashMap;
 import io.vavr.collection.TreeMap;
 
 import java.lang.reflect.Type;
