@@ -1,4 +1,4 @@
-package io.vavr.gson.seq;
+package io.vavr.gson.collection;
 
 import com.google.gson.reflect.TypeToken;
 import io.vavr.collection.Array;
@@ -6,7 +6,7 @@ import io.vavr.collection.Array;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 
-public class ArrayTest extends SeqTest<Array<?>> {
+public class ArrayTest extends CollectionTest<Array<?>> {
 
     @Override
     Array<?> of(Object... arr) {

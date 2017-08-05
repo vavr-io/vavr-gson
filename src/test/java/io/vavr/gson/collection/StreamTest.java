@@ -1,4 +1,4 @@
-package io.vavr.gson.seq;
+package io.vavr.gson.collection;
 
 import com.google.gson.reflect.TypeToken;
 import io.vavr.collection.Stream;
@@ -6,7 +6,7 @@ import io.vavr.collection.Stream;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 
-public class StreamTest extends SeqTest<Stream<?>> {
+public class StreamTest extends CollectionTest<Stream<?>> {
 
     @Override
     Stream<?> of(Object... arr) {

@@ -15,7 +15,7 @@ public class VavrGson {
     public static GsonBuilder registerAll(GsonBuilder builder)  {
         checkBuilder(builder);
         registerTuples(builder);
-        registerAllTraversables(builder);
+        registerAllCollections(builder);
         registerAllMaps(builder);
         registerAllMultimaps(builder);
         return builder;
@@ -65,14 +65,24 @@ public class VavrGson {
         return checkBuilder(builder).registerTypeHierarchyAdapter(Tuple.class, new TupleConverter());
     }
 
-    public static GsonBuilder registerAllTraversables(GsonBuilder builder)  {
+    public static GsonBuilder registerAllCollections(GsonBuilder builder)  {
         checkBuilder(builder);
         registerArray(builder);
         registerList(builder);
         registerQueue(builder);
         registerStream(builder);
         registerVector(builder);
+        registerHashSet(builder);
+        registerLinkedHashSet(builder);
         return builder;
+    }
+
+    public static GsonBuilder registerHashSet(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(HashSet.class, new TraversableConverter<>(HashSet::ofAll));
+    }
+
+    public static GsonBuilder registerLinkedHashSet(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(LinkedHashSet.class, new TraversableConverter<>(LinkedHashSet::ofAll));
     }
 
     public static GsonBuilder registerArray(GsonBuilder builder) {

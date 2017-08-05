@@ -1,4 +1,4 @@
-package io.vavr.gson.seq;
+package io.vavr.gson.collection;
 
 import com.google.gson.reflect.TypeToken;
 import io.vavr.collection.Queue;
@@ -6,7 +6,7 @@ import io.vavr.collection.Queue;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 
-public class QueueTest extends SeqTest<Queue<?>> {
+public class QueueTest extends CollectionTest<Queue<?>> {
 
     @Override
     Queue<?> of(Object... arr) {
