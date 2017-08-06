@@ -7,10 +7,10 @@
 package io.vavr.gson;
 
 import com.google.gson.GsonBuilder;
+import io.vavr.Lazy;
 import io.vavr.Tuple;
 import io.vavr.collection.*;
-
-import java.util.Comparator;
+import io.vavr.control.Option;
 
 public class VavrGson {
 
@@ -20,7 +20,17 @@ public class VavrGson {
         registerAllCollections(builder);
         registerAllMaps(builder);
         registerAllMultimaps(builder);
+        registerLazy(builder);
+        registerOption(builder);
         return builder;
+    }
+
+    public static GsonBuilder registerLazy(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(Lazy.class, new LazyConverter());
+    }
+
+    public static GsonBuilder registerOption(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeHierarchyAdapter(Option.class, new OptionConverter());
     }
 
     public static GsonBuilder registerAllMultimaps(GsonBuilder builder) {
