@@ -10,6 +10,8 @@ import com.google.gson.GsonBuilder;
 import io.vavr.Tuple;
 import io.vavr.collection.*;
 
+import java.util.Comparator;
+
 public class VavrGson {
 
     public static GsonBuilder registerAll(GsonBuilder builder)  {
@@ -74,6 +76,7 @@ public class VavrGson {
         registerVector(builder);
         registerHashSet(builder);
         registerLinkedHashSet(builder);
+        registerTreeSet(builder);
         return builder;
     }
 
@@ -83,6 +86,11 @@ public class VavrGson {
 
     public static GsonBuilder registerLinkedHashSet(GsonBuilder builder) {
         return checkBuilder(builder).registerTypeAdapter(LinkedHashSet.class, new TraversableConverter<>(LinkedHashSet::ofAll));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static GsonBuilder registerTreeSet(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(TreeSet.class, new TraversableConverter<>(it -> TreeSet.ofAll((o1, o2) -> ((Comparable) o1).compareTo(o2), it)));
     }
 
     public static GsonBuilder registerArray(GsonBuilder builder) {

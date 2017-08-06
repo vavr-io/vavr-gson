@@ -8,8 +8,8 @@ package io.vavr.gson;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import io.vavr.collection.Stream;
 import io.vavr.collection.Traversable;
 
 import java.lang.reflect.Type;
@@ -17,21 +17,17 @@ import java.util.function.Function;
 
 public class TraversableConverter<T extends Traversable<?>> extends JsonArrayConverter<T> {
 
-    private final Function<Iterable<JsonElement>, Traversable<JsonElement>> factory;
+    private final Function<Iterable<?>, Traversable<?>> factory;
 
-    TraversableConverter(Function<Iterable<JsonElement>, Traversable<JsonElement>> factory) {
+    TraversableConverter(Function<Iterable<?>, Traversable<?>> factory) {
         this.factory = factory;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     T fromJsonArray(JsonArray arr, Type type, Type[] subTypes, JsonDeserializationContext ctx) throws JsonParseException {
-        Traversable<JsonElement> traversable = factory.apply(arr);
-        if (subTypes.length == 1) {
-            return (T) traversable.map(e -> ctx.deserialize(e, subTypes[0]));
-        } else {
-            return (T) traversable;
-        }
+        Stream<Object> stream = Stream.ofAll(arr).map(e -> subTypes.length == 1 ? ctx.deserialize(e, subTypes[0]) : e);
+        return (T) factory.apply(stream);
     }
 
     @Override
