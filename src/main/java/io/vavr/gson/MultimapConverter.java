@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class MultimapConverter<K, V, T extends Multimap<K, V>> extends JsonObjectConverter<T> {
+class MultimapConverter<K, V, T extends Multimap<K, V>> extends JsonObjectConverter<T> {
 
     private final Function<Iterable<Tuple2<String, ?>>, Multimap<?, ?>> factory;
 

@@ -12,7 +12,7 @@ import io.vavr.Lazy;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public class LazyConverter implements JsonSerializer<Lazy<?>>, JsonDeserializer<Lazy<?>> {
+class LazyConverter implements JsonSerializer<Lazy<?>>, JsonDeserializer<Lazy<?>> {
 
     @Override
     public Lazy<?> deserialize(JsonElement json, Type type, JsonDeserializationContext ctx) throws JsonParseException {

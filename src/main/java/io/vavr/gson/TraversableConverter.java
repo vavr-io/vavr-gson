@@ -15,7 +15,7 @@ import io.vavr.collection.Traversable;
 import java.lang.reflect.Type;
 import java.util.function.Function;
 
-public class TraversableConverter<T extends Traversable<?>> extends JsonArrayConverter<T> {
+class TraversableConverter<T extends Traversable<?>> extends JsonArrayConverter<T> {
 
     private final Function<Iterable<?>, Traversable<?>> factory;
 

@@ -16,7 +16,7 @@ import io.vavr.collection.Traversable;
 
 import java.lang.reflect.Type;
 
-public class TupleConverter extends JsonArrayConverter<Tuple> {
+class TupleConverter extends JsonArrayConverter<Tuple> {
 
     @Override
     Tuple fromJsonArray(JsonArray json, Type type, Type[] subTypes, JsonDeserializationContext ctx) {

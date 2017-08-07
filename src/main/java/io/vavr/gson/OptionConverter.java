@@ -15,7 +15,7 @@ import io.vavr.control.Option;
 
 import java.lang.reflect.Type;
 
-public class OptionConverter extends JsonArrayConverter<Option<?>> {
+class OptionConverter extends JsonArrayConverter<Option<?>> {
 
     @Override
     Option<?> fromJsonArray(JsonArray arr, Type type, Type[] subTypes, JsonDeserializationContext ctx) throws JsonParseException {
