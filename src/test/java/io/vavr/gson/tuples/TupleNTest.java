@@ -20,6 +20,11 @@ public class TupleNTest extends AbstractTest {
         gson.fromJson("[1, 2, 3]", new TypeToken<Tuple2<Integer, Integer>>(){}.getType());
     }
 
+    @Test(expected = JsonParseException.class)
+    public void tooBigArray() {
+        gson.fromJson("[1, 2, 3, 4, 5, 6, 7, 8, 9]", Tuple.class);
+    }
+
     @Test
     public void deserializeSimpleType() {
         Object obj = gson.fromJson("[1,2]", Tuple.class);
