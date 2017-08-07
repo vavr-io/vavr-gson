@@ -157,7 +157,18 @@ public class VavrGson {
         registerHashSet(builder);
         registerLinkedHashSet(builder);
         registerTreeSet(builder);
+        registerPriorityQueue(builder);
         return builder;
+    }
+
+    /**
+     * Registers the {@link PriorityQueue} converter.
+     * @param builder The GSON builder to register the converters with.
+     * @return A reference to {@code builder}.
+     */
+    @SuppressWarnings("unchecked")
+    public static GsonBuilder registerPriorityQueue(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(PriorityQueue.class, new TraversableConverter<>(it -> PriorityQueue.ofAll((o1, o2) -> ((Comparable) o1).compareTo(o2), it)));
     }
 
     /**
