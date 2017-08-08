@@ -6,6 +6,44 @@
 # vavr-gson
 A set of GSON serialiser/deserialisers for [Vavr](http://vavr.io/) library
 
+## Usage
+
+### Maven
+
+```xml
+<dependency>
+  <groupId>io.vavr</groupId>
+  <artifactId>vavr-gson</artifactId>
+  <version>0.9.0</version>
+</dependency>
+```
+
+### Gradle
+
+```groovy
+compile("io.vavr:vavr-gson:0.9.0")
+```
+
+### Registering converters
+
+```java
+  GsonBuilder builder = new GsonBuilder();
+  VavrGson.registerAll(builder);
+  gson = builder.create();
+```
+
+### Serialization/deserialization
+
+```java
+  String json = gson.toJson(List.of(List.of(1)));
+  // = [[1]]
+  Object restored1 = gson.fromJson(json, List.class);
+  // = List([1])
+  Type type = new TypeToken<List<List<Integer>>>(){}.getType();
+  Object restored2 = gson.fromJson(json, type);
+  // = List(List(1))
+```
+
 ## Using Developer Versions
 
 Developer versions can be found [here](https://oss.sonatype.org/content/repositories/snapshots/io/vavr/vavr-gson).
