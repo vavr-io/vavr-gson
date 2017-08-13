@@ -54,7 +54,7 @@ Developer versions can be found [here](https://oss.sonatype.org/content/reposito
 <dependency>
   <groupId>io.vavr</groupId>
   <artifactId>vavr-gson</artifactId>
-  <version>0.9.0-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -86,7 +86,7 @@ Ensure that your `~/.m2/settings.xml` contains the following:
 ### Gradle
 
 ```groovy
-compile("io.vavr:vavr-gson:0.9.0-SNAPSHOT")
+compile("io.vavr:vavr-gson:1.0.0-SNAPSHOT")
 ```
 
 Ensure that your `build.gradle` contains the following:
