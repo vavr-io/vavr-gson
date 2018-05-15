@@ -60,6 +60,8 @@ public class VavrGson {
      */
     public static GsonBuilder registerAllMultimaps(GsonBuilder builder) {
         checkBuilder(builder);
+        registerMultimap(builder);
+        registerSortedMultimap(builder);
         registerHashMultimap(builder);
         registerLinkedHashMultimap(builder);
         registerTreeMultimap(builder);
@@ -73,6 +75,24 @@ public class VavrGson {
      */
     public static GsonBuilder registerHashMultimap(GsonBuilder builder) {
         return checkBuilder(builder).registerTypeAdapter(HashMultimap.class, new MultimapConverter<>(t -> HashMultimap.withSeq().ofEntries(t)));
+    }
+
+    /**
+     * Registers the {@link Multimap} converter.
+     * @param builder The GSON builder to register the converters with.
+     * @return A reference to {@code builder}.
+     */
+    public static GsonBuilder registerMultimap(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(Multimap.class, new MultimapConverter<>(t -> HashMultimap.withSeq().ofEntries(t)));
+    }
+
+    /**
+     * Registers the {@link SortedMultimap} converter.
+     * @param builder The GSON builder to register the converters with.
+     * @return A reference to {@code builder}.
+     */
+    public static GsonBuilder registerSortedMultimap(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(SortedMultimap.class, new MultimapConverter<>(t -> TreeMultimap.withSeq().ofEntries(t)));
     }
 
     /**
@@ -100,6 +120,8 @@ public class VavrGson {
      */
     public static GsonBuilder registerAllMaps(GsonBuilder builder) {
         checkBuilder(builder);
+        registerMap(builder);
+        registerSortedMap(builder);
         registerHashMap(builder);
         registerLinkedHashMap(builder);
         registerTreeMap(builder);
@@ -113,6 +135,24 @@ public class VavrGson {
      */
     public static GsonBuilder registerHashMap(GsonBuilder builder) {
         return checkBuilder(builder).registerTypeAdapter(HashMap.class, new MapConverter<>(HashMap::ofEntries));
+    }
+
+    /**
+     * Registers the {@link Map} converter.
+     * @param builder The GSON builder to register the converters with.
+     * @return A reference to {@code builder}.
+     */
+    public static GsonBuilder registerMap(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(Map.class, new MapConverter<>(HashMap::ofEntries));
+    }
+
+    /**
+     * Registers the {@link SortedMap} converter.
+     * @param builder The GSON builder to register the converters with.
+     * @return A reference to {@code builder}.
+     */
+    public static GsonBuilder registerSortedMap(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(SortedMap.class, new MapConverter<>(TreeMap::ofEntries));
     }
 
     /**
@@ -150,10 +190,15 @@ public class VavrGson {
     public static GsonBuilder registerAllCollections(GsonBuilder builder)  {
         checkBuilder(builder);
         registerArray(builder);
+        registerSeq(builder);
+        registerIndexedSeq(builder);
+        registerLinearSeq(builder);
         registerList(builder);
         registerQueue(builder);
         registerStream(builder);
         registerVector(builder);
+        registerSet(builder);
+        registerSortedSet(builder);
         registerHashSet(builder);
         registerLinkedHashSet(builder);
         registerTreeSet(builder);
@@ -178,6 +223,25 @@ public class VavrGson {
      */
     public static GsonBuilder registerHashSet(GsonBuilder builder) {
         return checkBuilder(builder).registerTypeAdapter(HashSet.class, new TraversableConverter<>(HashSet::ofAll));
+    }
+
+    /**
+     * Registers the {@link Set} converter.
+     * @param builder The GSON builder to register the converters with.
+     * @return A reference to {@code builder}.
+     */
+    public static GsonBuilder registerSet(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(Set.class, new TraversableConverter<>(HashSet::ofAll));
+    }
+
+    /**
+     * Registers the {@link SortedSet} converter.
+     * @param builder The GSON builder to register the converters with.
+     * @return A reference to {@code builder}.
+     */
+    @SuppressWarnings("unchecked")
+    public static GsonBuilder registerSortedSet(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(SortedSet.class, new TraversableConverter<>(it -> TreeSet.ofAll((o1, o2) -> ((Comparable) o1).compareTo(o2), it)));
     }
 
     /**
@@ -206,6 +270,33 @@ public class VavrGson {
      */
     public static GsonBuilder registerArray(GsonBuilder builder) {
         return checkBuilder(builder).registerTypeAdapter(Array.class, new TraversableConverter<>(Array::ofAll));
+    }
+
+    /**
+     * Registers the {@link Seq} converter.
+     * @param builder The GSON builder to register the converters with.
+     * @return A reference to {@code builder}.
+     */
+    public static GsonBuilder registerSeq(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(Seq.class, new TraversableConverter<>(List::ofAll));
+    }
+
+    /**
+     * Registers the {@link IndexedSeq} converter.
+     * @param builder The GSON builder to register the converters with.
+     * @return A reference to {@code builder}.
+     */
+    public static GsonBuilder registerIndexedSeq(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(IndexedSeq.class, new TraversableConverter<>(Vector::ofAll));
+    }
+
+    /**
+     * Registers the {@link LinearSeq} converter.
+     * @param builder The GSON builder to register the converters with.
+     * @return A reference to {@code builder}.
+     */
+    public static GsonBuilder registerLinearSeq(GsonBuilder builder) {
+        return checkBuilder(builder).registerTypeAdapter(LinearSeq.class, new TraversableConverter<>(List::ofAll));
     }
 
     /**

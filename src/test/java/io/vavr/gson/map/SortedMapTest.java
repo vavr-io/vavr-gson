@@ -1,29 +1,30 @@
 package io.vavr.gson.map;
 
 import com.google.gson.reflect.TypeToken;
+import io.vavr.collection.SortedMap;
 import io.vavr.collection.TreeMap;
 
 import java.lang.reflect.Type;
 
-public class TreeMapTest extends MapLikeTest<TreeMap<?,?>> {
+public class SortedMapTest extends MapLikeTest<SortedMap<?,?>> {
     @Override
     @SuppressWarnings("unchecked")
-    TreeMap<?, ?> of(Object key, Object value) {
+    SortedMap<?, ?> of(Object key, Object value) {
         return TreeMap.of((Comparable) key, value);
     }
 
     @Override
     Class<?> clz() {
-        return TreeMap.class;
+        return SortedMap.class;
     }
 
     @Override
     Type type() {
-        return new TypeToken<TreeMap<String, Integer>>(){}.getType();
+        return new TypeToken<SortedMap<String, Integer>>(){}.getType();
     }
 
     @Override
     Type typeWithNestedType() {
-        return new TypeToken<TreeMap<String, TreeMap<String, Integer>>>(){}.getType();
+        return new TypeToken<SortedMap<String, SortedMap<String, Integer>>>(){}.getType();
     }
 }

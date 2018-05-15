@@ -5,7 +5,7 @@ import io.vavr.collection.LinkedHashMap;
 
 import java.lang.reflect.Type;
 
-public class LinkedHashMapTest extends MapTest<LinkedHashMap<?,?>> {
+public class LinkedHashMapTest extends MapLikeTest<LinkedHashMap<?,?>> {
     @Override
     LinkedHashMap<?, ?> of(Object key, Object value) {
         return LinkedHashMap.of(key, value);
