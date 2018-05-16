@@ -5,7 +5,7 @@ import io.vavr.collection.HashMultimap;
 
 import java.lang.reflect.Type;
 
-public class HashMultimapTest extends MultimapTest<HashMultimap<?,?>> {
+public class HashMultimapTest extends MultimapLikeTest<HashMultimap<?,?>> {
     @Override
     HashMultimap<?, ?> of(Object key, Object value) {
         return HashMultimap.withSeq().of(key, value);

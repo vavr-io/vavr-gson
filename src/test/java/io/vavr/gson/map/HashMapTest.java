@@ -5,7 +5,7 @@ import io.vavr.collection.HashMap;
 
 import java.lang.reflect.Type;
 
-public class HashMapTest extends MapTest<HashMap<?,?>> {
+public class HashMapTest extends MapLikeTest<HashMap<?,?>> {
     @Override
     HashMap<?, ?> of(Object key, Object value) {
         return HashMap.of(key, value);

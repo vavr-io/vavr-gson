@@ -5,7 +5,7 @@ import io.vavr.collection.LinkedHashMultimap;
 
 import java.lang.reflect.Type;
 
-public class LinkedHashMultimapTest extends MultimapTest<LinkedHashMultimap<?,?>> {
+public class LinkedHashMultimapTest extends MultimapLikeTest<LinkedHashMultimap<?,?>> {
     @Override
     LinkedHashMultimap<?, ?> of(Object key, Object value) {
         return LinkedHashMultimap.withSeq().of(key, value);
