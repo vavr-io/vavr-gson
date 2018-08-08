@@ -7,8 +7,7 @@
 package io.vavr.gson;
 
 import com.google.gson.GsonBuilder;
-import io.vavr.Lazy;
-import io.vavr.Tuple;
+import io.vavr.*;
 import io.vavr.collection.*;
 import io.vavr.control.Option;
 
@@ -179,7 +178,16 @@ public class VavrGson {
      * @return A reference to {@code builder}.
      */
     public static GsonBuilder registerTuples(GsonBuilder builder) {
-        return checkBuilder(builder).registerTypeHierarchyAdapter(Tuple.class, new TupleConverter());
+        return checkBuilder(builder)
+                .registerTypeAdapter(Tuple0.class, new TupleConverter.N0())
+                .registerTypeAdapter(Tuple1.class, new TupleConverter.N1())
+                .registerTypeAdapter(Tuple2.class, new TupleConverter.N2())
+                .registerTypeAdapter(Tuple3.class, new TupleConverter.N3())
+                .registerTypeAdapter(Tuple4.class, new TupleConverter.N4())
+                .registerTypeAdapter(Tuple5.class, new TupleConverter.N5())
+                .registerTypeAdapter(Tuple6.class, new TupleConverter.N6())
+                .registerTypeAdapter(Tuple7.class, new TupleConverter.N7())
+                .registerTypeAdapter(Tuple8.class, new TupleConverter.N8());
     }
 
     /**
