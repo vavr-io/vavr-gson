@@ -14,14 +14,14 @@ A set of GSON serialiser/deserialisers for [Vavr](http://vavr.io/) library
 <dependency>
   <groupId>io.vavr</groupId>
   <artifactId>vavr-gson</artifactId>
-  <version>0.9.2</version>
+  <version>0.10.0</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```groovy
-compile("io.vavr:vavr-gson:0.9.2")
+compile("io.vavr:vavr-gson:0.10.0")
 ```
 
 ### Registering converters
